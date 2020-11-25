@@ -15,6 +15,7 @@ while(1):
     if(choice==1):
         email = input("Email : ")
         email = email.replace(" ","")
+        print("***At least one Capital one lower and one number***")
         password = input("New password : ")
         password = password.replace(" ","")
         repass = input("Repeat new password : ")
