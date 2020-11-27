@@ -1,5 +1,5 @@
-import UserFormVersion3 as Users
-
+import UserSystemv4 as Users
+import getpass
 email = ""
 password = ""
 name=""
@@ -24,18 +24,19 @@ while(1):
         surname = input("Surname : ")
         nickname = input("Type your nickname : ")
         if(repass == password ):
-            user = Users.UserManager(name,surname,nickname,email,password)
+            user = Users.SimpleUser(name,surname,nickname,email,password)
             user.UserRegister()
     elif(choice == 2):
         email = input("Email : ")
         email = email.replace(" " ,"")
-        password = input("Password : ")
+        password = getpass.getpass(prompt='Password: ', stream=None)
         password = password.replace(" ","")
-        user = Users.UserManager(name,surname,nickname,email,password)
+        user = Users.Staff(name,surname,nickname,email,password)
         user.LogIn()
         loginchoice = 0
         while(loginchoice != 3 and user.logpathcheck==1):
-            user.Manage()
+            user.Characteristics()
+            user.ShowUsers()
             print("==========================")
             print("Press 1 -> Delete Account")
             print("Press 2 -> Change Password")
