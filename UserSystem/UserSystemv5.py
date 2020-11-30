@@ -98,6 +98,17 @@ class StaffUser(Login,Register):
         print("========================")
         print("|You are Staff User    |")
         print("========================")
+    def UsersDisplay(self):
+        UserDB = open("UserDB.txt" , "r")
+        for Users in UserDB :
+            print(Users)
+    def Warn(self,Email):
+        UserDB = open("UserDB.txt" , "r")
+        for Users in UserDB :
+            info = Users.split(" ")
+            if self.email == info[0] :
+                print("Sending Warning to {}".format(Email))
+        
 class AdminUser(Login,Register):
     def __init__(self,name,surname,nickname,email,password):
         super().__init__(name,surname,nickname,email,password)
@@ -106,3 +117,20 @@ class AdminUser(Login,Register):
         print("========================")
         print("|You are Admin User    |")
         print("========================")
+    def UsersDisplay(self):
+        UserDB = open("UserDB.txt" , "r")
+        for Users in UserDB :
+            print(Users)
+    def Warn(self,Email):
+        UserDB = open("UserDB.txt" , "r")
+        for Users in UserDB :
+            info = Users.split(" ")
+            if self.email == info[0] :
+                print("Sending Warning to {}".format(Email))
+    def Ban(self,Email):
+        UserDB = open("UserDB.txt" , "r")
+        for Users in UserDB :
+            info = Users.split(" ")
+            if self.email == info[0] :
+                print("Banning {}".format(Email))
+        
