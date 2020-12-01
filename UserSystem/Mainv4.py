@@ -26,7 +26,12 @@ while(1):
         surname = input("Surname : ")
         nickname = input("Type your nickname : ")
         if(repass == password ):
-            user = Users.SimpleUser(name,surname,nickname,email,password)
+            if email[-12:-3]=="dataverse" and email[0:5] == "admin":
+                user = Users.AdminUser(name,surname,nickname,email,password)
+            elif email[-12:-3]=="dataverse":
+                user = Users.StaffUser(name,surname,nickname,email,password)
+            else:
+                user = Users.SimpleUser(name,surname,nickname,email,password)
             user.UserRegister()
     elif(choice == 2):
         email = input("Email : ")
@@ -50,6 +55,7 @@ while(1):
             user = Users.SimpleUser(name,surname,nickname,email,password)
         user.LogIn()
         loginchoice = 0
+        switch = 0
         while(loginchoice != 3 and user.logpathcheck==1):
             user.Characteristics()
             print("==========================")

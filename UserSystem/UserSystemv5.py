@@ -7,12 +7,11 @@ class User:
         self.password = password
 
 class Validate(User):
-    logpathcheck,IsLoggedIn,position,IsRegistered = 0,0,0,0
+    logpathcheck,IsLoggedIn,IsRegistered = 0,0,0
     def __init__(self,name,surname,nickname,email,password):
         super().__init__(name,surname,nickname,email,password)
         UserDB = open("UserDB.txt" , "r")
         for Users in UserDB :
-            Validate.position = Validate.position + 1
             info = Users.split(" ")
             if self.email == info[0] and self.password == info[1] :
                 Validate.IsLoggedIn = 1
@@ -21,18 +20,24 @@ class Validate(User):
                 self.nickname = info[4][:-1]
                 break
             elif self.email == info[0] :
-                print("here")
                 Validate.IsRegistered = 1
                 break
+            Validate.IsRegistered = 0
+            
 class Login(Validate): 
     def __init__(self,name,surname,nickname,email,password):
         super().__init__(name,surname,nickname,email,password)
     def ResetPassword(self,newPassword):
+        newDB = []
         UserDB = open("UserDB.txt" , "r+")
-        content = UserDB.readlines()
-        content[Validate.position - 1] = self.email + " " + newPassword + " " + self.name + " " + self.surname + " "+ self.nickname +"\n"
+        for Userss in UserDB :
+            info = Userss.split(" ")
+            if(info[0]!=self.email):
+                newDB.append(Userss)
+            else:
+                newDB.append(self.email + " " + newPassword + " " + self.name + " " + self.surname + " "+ self.nickname +"\n")
         UserDB.seek(0)
-        for i in content:
+        for i in newDB:
             UserDB.write(i)
         UserDB.close()
     def Delete(self):
@@ -60,7 +65,7 @@ class Login(Validate):
             Validate.logpathcheck =1
             print("\nYou logged in Successfully\n")
     def Logout(self):
-        Validate.IsLoggedIn,Validate.position,Validate.IsRegistered =0,0,1
+        Validate.IsLoggedIn,Validate.IsRegistered =0,0
     
 class Register(Validate):
     def __init__(self,name,surname,nickname,email,password):
