@@ -1,13 +1,13 @@
 import UserSystemv6 as Users   
 import getpass  
-import EmailSender
+import time
 email , password , name , surname , nickname , admin , staff = "" ,  "" , "" , "", "" , 0 , 0
 while(1):
-    print("==========================")
+    print("="*15)
     print("Press 0 -> Exit ")
     print("Press 1 -> Register ")
     print("Press 2 -> Login ")
-    print("==========================")
+    print("="*15)
     choice = int(input("Choice : "))
     if(choice==1):
         email = input("Email : ")
@@ -27,11 +27,12 @@ while(1):
                 user = Users.StaffUser(name,surname,nickname,email,password)
             else:
                 user = Users.SimpleUser(name,surname,nickname,email,password)
-            verify = EmailSender.ConfirmationEmail(email)
-            if verify == 1:
-                user.UserRegister()
-            elif verify == 0:
-                print("You didn't enter the correct code try again")
+            user.UserRegister()
+            # verify = EmailSender.ConfirmationEmail(email)
+            # if verify == 1:
+            #     user.UserRegister()
+            # elif verify == 0:
+            #     print("You didn't enter the correct code try again")
     elif(choice == 2):
         email = input("Email : ")
         email = email.replace(" " ,"")
@@ -53,11 +54,12 @@ while(1):
         else:
             user = Users.SimpleUser(name,surname,nickname,email,password)
         user.LogIn()
+        startTime = time.time()
         loginchoice = 0
         switch = 0
         while(loginchoice != 3 and user.logpathcheck==1):
             user.Characteristics()
-            print("==========================")
+            print("="*15)
             print("Press 1 -> Delete Account")
             print("Press 2 -> Change Password")
             print("Press 3 -> Logout")
@@ -66,14 +68,14 @@ while(1):
                 print("Press 4 -> Show Users")
                 print("Press 5 -> Warn Users")
                 if(admin==0):
-                    print("==========================") 
+                    print("="*15) 
             else:
-                print("==========================") 
+                print("="*15) 
                 
             if(admin == 1 ):
                 print("Press 6 -> Delete Users")
                 print("Press 7 -> Ban Users")
-                print("==========================") 
+                print("="*15) 
             loginchoice= int(input("Choice: "))
             if(loginchoice == 1):
                 if(email!="" and password!=""):
@@ -92,6 +94,8 @@ while(1):
                     print("You need to login first")
             elif (loginchoice == 3):
                 user.Logout()
+                SessionTime = user.SessionTime(startTime)
+                print("Your session time was {} seconds".format(round(SessionTime,2)))
                 break
             else:
                 if ((admin ==1 or staff==1) and loginchoice == 4):
