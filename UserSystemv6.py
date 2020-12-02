@@ -97,33 +97,32 @@ class Register(Validate):
         else:
             print("\nYou are already Registered\n")
 
-# def decorator(func):
-#     def wrapper(func,*args):
-#         print('hello')
-#         func(*args)
-#     return wrapper
 class BaseUser(Login,Register,metaclass=abc.ABCMeta):
 
-    
-    @abc.abstractmethod
-    def Characteristics(self):
-        print('YO')
+    pass
+    # @abc.abstractmethod
+    # def Characteristics(self):
+    #     print('YO')
         
         
     
-    @abc.abstractmethod    
-    def SessionTime(self):
-        print("No")
-        pass
+    # @abc.abstractmethod    
+    # def SessionTime(self):
+    #     print("No")
+    #     pass
     
+def newChars(func):
+    def inner(*args,**kwargs):
+        print("Username : " + args[0].nickname+ "\nName : " + args[0].name 
+              + "\nSurname : " + args[0].surname + "\nEmail : " + args[0].email+ "\n")
+        func(*args,**kwargs)
+    return inner
 
 class SimpleUser(BaseUser,metaclass=abc.ABCMeta):
     def __init__(self,name,surname,nickname,email,password):
         super().__init__(name,surname,nickname,email,password)
-    
+    @newChars
     def Characteristics(self):
-        print("Username : " + self.nickname + "\nName : " + self.name 
-              + "\nSurname : " + self.surname + "\nEmail : " + self.email + "\n")
         print("========================")
         print("|You are simple User   |")
         print("========================")
@@ -136,10 +135,8 @@ class SimpleUser(BaseUser,metaclass=abc.ABCMeta):
 class StaffUser(BaseUser,metaclass=abc.ABCMeta):
     def __init__(self,name,surname,nickname,email,password):
         super().__init__(name,surname,nickname,email,password)
-    
+    @newChars
     def Characteristics(self):
-        print("Username : " + self.nickname + "\nName : " + self.name 
-              + "\nSurname : " + self.surname + "\nEmail : " + self.email + "\n")
         print("========================")
         print("|You are Staff User    |")
         print("========================")
@@ -159,10 +156,8 @@ class StaffUser(BaseUser,metaclass=abc.ABCMeta):
 class AdminUser(BaseUser,metaclass=abc.ABCMeta):
     def __init__(self,name,surname,nickname,email,password):
         super().__init__(name,surname,nickname,email,password)
-    
+    @newChars
     def Characteristics(self):
-        print("Username : " + self.nickname + "\nName : " + self.name 
-              + "\nSurname : " + self.surname + "\nEmail : " + self.email + "\n")
         print("========================")
         print("|You are Admin User    |")
         print("========================")

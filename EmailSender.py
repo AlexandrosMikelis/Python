@@ -3,6 +3,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import random
 import string
+import os
 
 def get_random_string(length):
     letters = string.ascii_lowercase
@@ -10,9 +11,9 @@ def get_random_string(length):
     return result_str
 
 def ConfirmationEmail(Receiver):
-    sender_email = "mikasitesowner@gmail.com"
+    sender_email = "smtp.gmail.com"
     receiver_email = Receiver
-    password = "icantremembermypassword123"
+    password = os.getenv("EmailSenderpsw")
     port = 465
     
     confirmationCode = get_random_string(8)
@@ -23,10 +24,8 @@ def ConfirmationEmail(Receiver):
     
     # Create the plain-text and HTML version of your message
     text = """\
-    Hi,
-    How are you?
-    Real Python has many great tutorials:
-    www.realpython.com"""
+    Hi User,
+    Your Confirmation Code is {}""".format(confirmationCode)
     html = """\
     <html>
       <body>
@@ -49,7 +48,7 @@ def ConfirmationEmail(Receiver):
     
     # Create secure connection with server and send email
     context = ssl.create_default_context()
-    with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
+    with smtplib.SMTP_SSL("smtp@gmail.com", port, context=context) as server:
         server.login(sender_email, password)
         server.sendmail(
             sender_email, receiver_email, message.as_string()
