@@ -1,7 +1,9 @@
 import UserSystemv6 as Users   
 import getpass  
 import time
+import EmailSender
 email , password , name , surname , nickname , admin , staff = "" ,  "" , "" , "", "" , 0 , 0
+
 while(1):
     print("="*15)
     print("Press 0 -> Exit ")
@@ -27,12 +29,12 @@ while(1):
                 user = Users.StaffUser(name,surname,nickname,email,password)
             else:
                 user = Users.SimpleUser(name,surname,nickname,email,password)
-            user.UserRegister()
-            # verify = EmailSender.ConfirmationEmail(email)
-            # if verify == 1:
-            #     user.UserRegister()
-            # elif verify == 0:
-            #     print("You didn't enter the correct code try again")
+#            user.UserRegister()
+            verify = EmailSender.ConfirmationEmail(email)
+            if verify == 1:
+                user.UserRegister()
+            elif verify == 0:
+                print("You didn't enter the correct code try again")
     elif(choice == 2):
         email = input("Email : ")
         email = email.replace(" " ,"")
@@ -93,9 +95,8 @@ while(1):
                 else:
                     print("You need to login first")
             elif (loginchoice == 3):
-                user.Logout()
-                SessionTime = user.SessionTime(startTime)
-                print("Your session time was {} seconds".format(round(SessionTime,2)))
+                user.Logout(startTime)
+#                print("Your session time was {} seconds".format(round(SessionTime,2)))
                 break
             else:
                 if ((admin ==1 or staff==1) and loginchoice == 4):

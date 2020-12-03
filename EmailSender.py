@@ -4,17 +4,30 @@ from email.mime.multipart import MIMEMultipart
 import random
 import string
 import os
-
+port = 465
+host = "smtp.gmail.com"
 def get_random_string(length):
     letters = string.ascii_lowercase
     result_str = ''.join(random.choice(letters) for i in range(length))
     return result_str
-
+def Configuration(Receiver_Email):
+    if Receiver_Email[-11:]== "hotmail.com" or Receiver_Email[-8:]=="live.com":
+        host = "smtp-mail.outlook.com"
+        port = 587
+    elif Receiver_Email[-9:]== "yahoo.com" or Receiver_Email[-8:]== "yahoo.gr":
+        host = "smtp.mail.yahoo.com"
+        port = 465
+    elif Receiver_Email[-9:]== "gmail.com" or Receiver_Email[-8:]== "gmail.gr":
+        port = 465
+        host = "smtp.gmail.com"
+    else:
+        print("Sorry we dont support this type of email")
 def ConfirmationEmail(Receiver):
-    sender_email = "smtp.gmail.com"
+    sender_email = "mikasitesowner@gmail.com"
     receiver_email = Receiver
-    password = os.getenv("EmailSenderpsw")
-    port = 465
+    password = os.getenv('EMAILSENDERPSW')
+    
+    Configuration(Receiver)
     
     confirmationCode = get_random_string(8)
     message = MIMEMultipart("alternative")
@@ -48,7 +61,7 @@ def ConfirmationEmail(Receiver):
     
     # Create secure connection with server and send email
     context = ssl.create_default_context()
-    with smtplib.SMTP_SSL("smtp@gmail.com", port, context=context) as server:
+    with smtplib.SMTP_SSL(host, port, context=context) as server:
         server.login(sender_email, password)
         server.sendmail(
             sender_email, receiver_email, message.as_string()

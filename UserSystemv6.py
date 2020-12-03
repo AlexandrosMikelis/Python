@@ -1,5 +1,6 @@
 import abc
 import time
+import Decorators
 class User:
     def __init__(self,name,surname,nickname,email,password):
         self.name = name
@@ -71,8 +72,10 @@ class Login(Validate):
         else:
             Validate.logpathcheck =1
             print("\nYou logged in Successfully\n")
-    
-    def Logout(self):
+            
+    @Decorators.timeit
+    def Logout(self,StartTime):
+        print("You logged out")
         Validate.IsLoggedIn,Validate.IsRegistered =0,0
     
 class Register(Validate):
@@ -111,17 +114,10 @@ class BaseUser(Login,Register,metaclass=abc.ABCMeta):
     #     print("No")
     #     pass
     
-def newChars(func):
-    def inner(*args,**kwargs):
-        print("Username : " + args[0].nickname+ "\nName : " + args[0].name 
-              + "\nSurname : " + args[0].surname + "\nEmail : " + args[0].email+ "\n")
-        func(*args,**kwargs)
-    return inner
-
 class SimpleUser(BaseUser,metaclass=abc.ABCMeta):
     def __init__(self,name,surname,nickname,email,password):
         super().__init__(name,surname,nickname,email,password)
-    @newChars
+    @Decorators.newChars
     def Characteristics(self):
         print("========================")
         print("|You are simple User   |")
@@ -135,7 +131,7 @@ class SimpleUser(BaseUser,metaclass=abc.ABCMeta):
 class StaffUser(BaseUser,metaclass=abc.ABCMeta):
     def __init__(self,name,surname,nickname,email,password):
         super().__init__(name,surname,nickname,email,password)
-    @newChars
+    @Decorators.newChars
     def Characteristics(self):
         print("========================")
         print("|You are Staff User    |")
@@ -156,7 +152,7 @@ class StaffUser(BaseUser,metaclass=abc.ABCMeta):
 class AdminUser(BaseUser,metaclass=abc.ABCMeta):
     def __init__(self,name,surname,nickname,email,password):
         super().__init__(name,surname,nickname,email,password)
-    @newChars
+    @Decorators.newChars
     def Characteristics(self):
         print("========================")
         print("|You are Admin User    |")
