@@ -29,7 +29,6 @@ while(1):
                 user = Users.StaffUser(name,surname,nickname,email,password)
             else:
                 user = Users.SimpleUser(name,surname,nickname,email,password)
-#            user.UserRegister()
             verify = EmailSender.ConfirmationEmail(email)
             if verify == 1:
                 user.UserRegister()
@@ -96,7 +95,6 @@ while(1):
                     print("You need to login first")
             elif (loginchoice == 3):
                 user.Logout(startTime)
-#                print("Your session time was {} seconds".format(round(SessionTime,2)))
                 break
             else:
                 if ((admin ==1 or staff==1) and loginchoice == 4):

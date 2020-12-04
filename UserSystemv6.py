@@ -1,6 +1,6 @@
 import abc
-import time
 import Decorators
+
 class User:
     def __init__(self,name,surname,nickname,email,password):
         self.name = name
@@ -20,7 +20,11 @@ class Validate(User):
                 Validate.IsLoggedIn = 1
                 self.name = info[2]
                 self.surname = info[3]
-                self.nickname = info[4][:-1]
+                try:
+                    if info[5] != '':
+                        self.nickname=info[4]
+                except:
+                    self.nickname = info[4][:-1]
                 break
             elif self.email == info[0] :
                 Validate.IsRegistered = 1
@@ -34,6 +38,7 @@ class Login(Validate):
     
     def ResetPassword(self,newPassword):
         newDB = []
+        self.password = newPassword
         UserDB = open("UserDB.txt" , "r+")
         for Userss in UserDB :
             info = Userss.split(" ")
@@ -41,7 +46,9 @@ class Login(Validate):
                 newDB.append(Userss)
             else:
                 newDB.append(self.email + " " + newPassword + " " + self.name 
-                             + " " + self.surname + " "+ self.nickname +"\n")
+                             + " " + self.surname + " "+ self.nickname + " " 
+                             + info[-2] +" "+ info[-1][:-1] + '\n')
+        print(newDB)
         UserDB.seek(0)
         for i in newDB:
             UserDB.write(i)
@@ -53,12 +60,12 @@ class Login(Validate):
             lines = UserDB.readlines()
             UserDB.seek(0)
             for i in lines:
-                if i != self.email + " " + self.password + " " + self.name + " " + self.surname + " "+ self.nickname +"\n":
+                if (i != self.email + " " + self.password + " " + self.name 
+                    + " " + self.surname + " "+ self.nickname +"\n"):
                     UserDB.write(i)
             UserDB.truncate()
             Validate.IsLoggedIn=0
             Validate.IsRegistered =0
-            Validate.position = 0
             Validate.logpathcheck = 0
         UserDB.close()
     
@@ -101,33 +108,21 @@ class Register(Validate):
             print("\nYou are already Registered\n")
 
 class BaseUser(Login,Register,metaclass=abc.ABCMeta):
-
-    pass
-    # @abc.abstractmethod
-    # def Characteristics(self):
-    #     print('YO')
-        
-        
     
-    # @abc.abstractmethod    
-    # def SessionTime(self):
-    #     print("No")
-    #     pass
+    @abc.abstractmethod
+    def Characteristics(self):
+        pass
+        
     
 class SimpleUser(BaseUser,metaclass=abc.ABCMeta):
     def __init__(self,name,surname,nickname,email,password):
         super().__init__(name,surname,nickname,email,password)
     @Decorators.newChars
     def Characteristics(self):
-        print("========================")
+        print("="*23)
         print("|You are simple User   |")
-        print("========================")
+        print("="*23)
     
-    def SessionTime(self,startTime):
-        start = startTime
-        end = time.time()
-        return end - start
-
 class StaffUser(BaseUser,metaclass=abc.ABCMeta):
     def __init__(self,name,surname,nickname,email,password):
         super().__init__(name,surname,nickname,email,password)
@@ -136,17 +131,15 @@ class StaffUser(BaseUser,metaclass=abc.ABCMeta):
         print("========================")
         print("|You are Staff User    |")
         print("========================")
-    
+    @Decorators.UserShowcase
     def UsersDisplay(self):
-        UserDB = open("UserDB.txt" , "r")
-        for Users in UserDB :
-            print(Users)
+        pass
         
     def Warn(self,Email):
         UserDB = open("UserDB.txt" , "r")
         for Users in UserDB :
             info = Users.split(" ")
-            if self.email == info[0] :
+            if self.email == info[0] and self.email[-12:-3]!= 'dataverse':
                 print("Sending Warning to {}".format(Email))
         
 class AdminUser(BaseUser,metaclass=abc.ABCMeta):
@@ -157,17 +150,15 @@ class AdminUser(BaseUser,metaclass=abc.ABCMeta):
         print("========================")
         print("|You are Admin User    |")
         print("========================")
-    
+    @Decorators.UserShowcase
     def UsersDisplay(self):
-        UserDB = open("UserDB.txt" , "r")
-        for Users in UserDB :
-            print(Users)
+        pass
         
     def Warn(self,Email):
         UserDB = open("UserDB.txt" , "r")
         for Users in UserDB :
             info = Users.split(" ")
-            if self.email == info[0] :
+            if self.email == info[0] and self.email[-12:-3]!= 'dataverse' and self.email[0:5] != "admin":
                 print("Sending Warning to {}".format(Email))
                 
     def Ban(self,Email):

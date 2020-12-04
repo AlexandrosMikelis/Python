@@ -3,7 +3,8 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import random
 import string
-import os
+import base64
+
 port = 465
 host = "smtp.gmail.com"
 def get_random_string(length):
@@ -25,7 +26,7 @@ def Configuration(Receiver_Email):
 def ConfirmationEmail(Receiver):
     sender_email = "mikasitesowner@gmail.com"
     receiver_email = Receiver
-    password = os.getenv('EMAILSENDERPSW')
+    password = base64.b64decode("aWNhbnRyZW1lbWJlcm15cGFzc3dvcmQxMjM=").decode("utf-8")
     
     Configuration(Receiver)
     
