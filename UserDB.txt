@@ -1,6 +1,4 @@
-mika@dataverse.gr Hello1234 alex mikelis mika 2020-12-04 14:21:51.302660
-admin1@dataverse.gr Hello12345 Alexandros Mikelis Mika 2020-12-04 14:05:04.060464
-iamalekos@hotmail.com Hello1234 alex mikelis mika 2020-12-04 13:07:48.421607
-type2@gmail.com Hello1234 type 2 type2 2020-12-04 13:38:01.8388158815
-type5@gmail.com Koko1234 type 5 type5
-mikasitesowner@gmail.com Koko1234 mika sites mika
+mika@dataverse.gr Hello123 Alex Mikelis Mika
+iamalekos@hotmail.com Koko1234 alex mike mika 2020-12-08 12:19:41.039268
+admin1@dataverse.gr newPassword123 Alexandros Mikelis Mika
+admin2@dataverse.gr New1234 Alexandros Mikelis Mika 
