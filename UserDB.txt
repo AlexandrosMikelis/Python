@@ -1,4 +1,0 @@
-mika@dataverse.gr Hello123 Alex Mikelis Mika
-iamalekos@hotmail.com Koko1234 alex mike mika 2020-12-08 12:19:41.039268
-admin1@dataverse.gr newPassword123 Alexandros Mikelis Mika
-admin2@dataverse.gr New1234 Alexandros Mikelis Mika 
