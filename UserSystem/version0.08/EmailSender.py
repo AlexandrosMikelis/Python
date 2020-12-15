@@ -19,6 +19,8 @@ import random
 import string
 import base64
 
+#Default port id and host name is nothing is given
+#   -gmail
 port = 465
 host = "smtp.gmail.com"
 
@@ -39,7 +41,7 @@ def get_random_string(length):
 
 
 
-def Configuration(Receiver_Email):
+def Configuration(Receiver_Email):              #Email Check
     
     if (Receiver_Email[-11:]== "hotmail.com" or 
         Receiver_Email[-8:]=="live.com" or 
@@ -81,6 +83,7 @@ def ConfirmationEmail(Receiver):
     Configuration(Receiver)
     
     confirmationCode = get_random_string(8)
+    
     message = MIMEMultipart("alternative")
     message["Subject"] = "Verification Code"
     message["From"] = sender_email
@@ -119,13 +122,14 @@ def ConfirmationEmail(Receiver):
                         receiver_email, 
                         message.as_string()
         )
-    #Get Verification Code
+    # Get Verification Code
     Verification = input("We have sent an email on adress : {} \n \
                          Please Enter the code \
                          you will find in this email: ".format(Receiver))
     
-    if Verification == confirmationCode:
-        Verify = 1
-    else:
-        Verify = 0
+    Verify = int(Verification == confirmationCode)
+    #if Verification == confirmationCode:
+    #    Verify = 1
+    #else:
+    #    Verify = 0
     return Verify
