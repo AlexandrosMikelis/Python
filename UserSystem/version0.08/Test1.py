@@ -1,9 +1,7 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Dec  7 11:34:58 2020
+#Test 1 module Test Paths that user might take 
+#Uses from the moule TestFunctions to spawn users 
+#Change the type of User byt changing the LABEL var
 
-@author: Alex
-"""
 import UserSystemv6 as Users
 import time 
 import random
@@ -11,9 +9,9 @@ import TestsFunctions as TestF
 
 starttime = 0
 validuser = 0
-Email = "iamalekos@hotmail.com"
-newPassword = "newPassword123"
-N_USERS = 10
+Email = "iamalekos@hotmail.com" #a sure user in database to ban/warn
+newPassword = "newPassword123" #always the newPass in Change Password Option  
+N_USERS = 10            # how many Users you want the test to examine
 LABEL = "Simple"   # <===== Admin = Check N_USERS admins Staff == ... Simple=...
 
 class TestClass:
