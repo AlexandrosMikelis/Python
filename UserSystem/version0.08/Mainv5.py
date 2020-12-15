@@ -1,7 +1,13 @@
+#Main:
+#   if Version > 0.06 UserSystem module will not print messages due to test module:
+#           Problem Solution:
+#               1)Save the returns of the methods in a temporary var and print that var everytime
+#               2)Return and Print the message in the method
 import UserSystemv6 as Users   
 import getpass  
 import time
 import EmailSender
+
 email , password , name , surname , nickname , admin , staff = "" ,  "" , "" , "", "" , 0 , 0
 
 while(1):
